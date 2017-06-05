@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html>
+<head>
+    <script src="angular.min.js"></script>
+    <style type="text/css">
+        table {
+        }
+
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="app1" ng-controller="PhoneListCtrl">
+        <span>手机品牌</span>
+        <span><input type="text" ng-model="tmpPhone.name" /></span>
+        <span>厂商</span>
+        <span><input type="text" ng-model="tmpPhone.supplier" /></span>
+
+        <button ng-click="addPhone()">保存</button>
+        <button ng-click="delPhone()">删除</button>
+        <button ng-click="testPhone()">测试</button>
+        <br />
+        <table style="border:1px solid black;">
+            <tr><th>手机品牌</th><th>厂商</th></tr>
+            <tr ng-repeat="phone in phones"><td><input type="checkbox" ng-checked="phone.expand"  /></td><td>{{phone.name}}</td><td>{{phone.supplier}}</td></tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        var app1 = angular.module('app1', []);
+        app1.controller('PhoneListCtrl', function ($scope) {
+            $scope.tmpPhone = { name: "", supplier: "" };
+            $scope.phones = [
+              {
+                  "name": "苹果",
+                  "supplier": "苹果公司"
+              },
+              {
+                  "name": "小米",
+                  "supplier": "小米公司"
+              },
+              {
+                  "name": "华为",
+                  "supplier": "华为公司"
+              }
+            ];
+            $scope.addPhone = function () {
+                if ($scope.tmpPhone.name != undefined && $scope.tmpPhone.name != "") {
+                    var bAdd = true;
+                    for (var i = 0; i < $scope.phones.length; i++) {
+                        if ($scope.phones[i].name == $scope.tmpPhone.name) {
+                            $scope.phones[i].supplier = $scope.tmpPhone.supplier;
+                            bAdd = false;
+                            break;
+                        }
+                    }
+                    if (bAdd) {
+                        var newPhone = JSON.parse(JSON.stringify($scope.tmpPhone));
+                        $scope.phones.push(newPhone);
+                        //$scope.tmpPhone = { name: "", supplier: "" };
+                    }
+                }
+            }
+            $scope.delPhone = function () {
+                if ($scope.tmpPhone.name != undefined && $scope.tmpPhone.name != "") {
+
+                    for (var i = 0; i < $scope.phones.length; i++) {
+                        if ($scope.phones[i].name == $scope.tmpPhone.name) {
+                            $scope.phones.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            }
+            $scope.testPhone = function () {
+                for (var i = 0; i < $scope.phones.length; i++) {
+                   
+                        $scope.phones[i].expand = true;
+                    
+                    
+                }
+
+            }
+        });
+    </script>
+</body>
+</html>

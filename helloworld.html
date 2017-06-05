@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <script src="angular.min.js"></script>
+        
+    </head>
+    <body>
+        <div ng-app="app1">
+            Your name: <input type="text" ng-model="yourname" placeholder="World">
+            <hr>
+            Hello {{yourname || 'World'}}!
+            <hr />
+            <p>1 + 2 = {{ 1 + 2 }}</p>        <hr />
+        </div>
+        <div id="divapp2" ng-app="app2"   ng-controller="PhoneListCtrl">
+            <ul>
+                <li ng-repeat="phone in phones">
+                    {{phone.name}}
+                    <p>{{phone.snippet}}</p>
+                </li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var app1 = angular.module('app1', []);
+            var app2 = angular.module('app2', []);
+            app2.controller('PhoneListCtrl', function ($scope) {
+                $scope.phones = [
+                  {
+                      "name": "Nexus S",
+                      "snippet": "Fast just got faster with Nexus S."
+                  },
+                  {
+                      "name": "Motorola XOOM™ with Wi-Fi",
+                      "snippet": "The Next, Next Generation tablet."
+                  },
+                  {
+                      "name": "MOTOROLA XOOM™",
+                      "snippet": "The Next, Next Generation tablet."
+                  }
+                ];
+            });
+            angular.bootstrap(document.getElementById("divapp2"), ['app2']);
+        </script>
+    </body>
+</html>
